@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Private Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8; /* Light Grayish Blue */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #2c3e50; /* Dark Grayish Blue */
+        }
+
+        .container {
+            background-color: #ffffff; /* White */
+            padding: 30px; /* Increased padding */
+            border-radius: 12px; /* Increased border radius */
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.3); /* Increased shadow */
+            width: 600px; /* Increased width */
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50; /* Dark Grayish Blue */
+            font-size: 28px; /* Increased font size */
+            margin-bottom: 20px; /* Increased margin */
+        }
+
+        .input-group {
+            margin-bottom: 15px; /* Increased margin */
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px; /* Increased margin */
+            font-weight: bold;
+            color: #34495e; /* Slightly lighter Dark Grayish Blue */
+            font-size: 18px; /* Increased font size */
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%; /* Full width */
+            padding: 12px; /* Increased padding */
+            border: 1px solid #bdc3c7; /* Light Gray */
+            border-radius: 8px; /* Increased border radius */
+            background-color: #ecf0f1; /* Light Gray */
+            color: #2c3e50; /* Dark Grayish Blue */
+            font-size: 16px; /* Increased font size */
+        }
+
+        #documentationList {
+            margin-bottom: 15px; /* Increased margin */
+        }
+
+        .add-doc-button,
+        .send-button {
+            display: block;
+            width: 100%;
+            padding: 12px; /* Increased padding */
+            background-color: #3498db; /* Blue */
+            color: #ffffff; /* White */
+            border: none;
+            border-radius: 8px; /* Increased border radius */
+            cursor: pointer;
+            font-size: 18px; /* Increased font size */
+            transition: background-color 0.3s;
+            margin-top: 10px; /* Added top margin */
+        }
+
+        .add-doc-button:hover,
+        .send-button:hover {
+            background-color: #2980b9; /* Darker Blue */
+        }
+
+        .documentation-item {
+            margin-bottom: 15px; /* Increased margin */
+            padding: 15px; /* Increased padding */
+            border: 1px solid #bdc3c7; /* Light Gray */
+            border-radius: 8px; /* Increased border radius */
+            background-color: #f9f9f9; /* Very Light Gray */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Private Project</h1>
+        <div class="input-group">
+            <label for="projectIdInput">Project ID</label>
+            <input type="text" id="projectIdInput" placeholder="Enter Project ID">
+        </div>
+        <div class="input-group">
+            <label for="swaggerUrlInput">Swagger URL</label>
+            <input type="text" id="swaggerUrlInput" placeholder="Enter Swagger URL">
+        </div>
+        <div class="input-group">
+            <label for="phoneNumberInput">Phone Number</label>
+            <input type="text" id="phoneNumberInput" placeholder="Enter Phone Number">
+        </div>
+        <div class="input-group">
+            <label for="telegramUsernameInput">Telegram Username</label>
+            <input type="text" id="telegramUsernameInput" placeholder="Enter Telegram Username">
+        </div>
+        <div class="input-group">
+            <label>Documentation</label>
+            <div id="documentationList"></div>
+            <button class="add-doc-button" onclick="addDocumentation()">Add Documentation</button>
+        </div>
+        <button class="send-button" onclick="createProject()">Create Project</button>
+    </div>
+
+    <script>
+        function addDocumentation() {
+            const documentationList = document.getElementById('documentationList');
+            const documentationItem = document.createElement('div');
+            documentationItem.className = 'documentation-item';
+            
+            documentationItem.innerHTML = `
+                <div class="input-group">
+                    <label>Title</label>
+                    <input type="text" class="doc-title" placeholder="Enter Documentation Title">
+                </div>
+                <div class="input-group">
+                    <label>Description</label>
+                    <textarea class="doc-description" placeholder="Enter Documentation Description"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>URL</label>
+                    <input type="text" class="doc-url" placeholder="Enter Documentation URL">
+                </div>
+            `;
+            
+            documentationList.appendChild(documentationItem);
+        }
+
+        function createProject() {
+            const projectId = document.getElementById('projectIdInput').value;
+            const swaggerUrl = document.getElementById('swaggerUrlInput').value;
+            const phoneNumber = document.getElementById('phoneNumberInput').value;
+            const telegramUsername = document.getElementById('telegramUsernameInput').value;
+
+            const documentationItems = document.querySelectorAll('.documentation-item');
+            const documentation = [];
+
+            documentationItems.forEach(item => {
+                const title = item.querySelector('.doc-title').value;
+                const description = item.querySelector('.doc-description').value;
+                const url = item.querySelector('.doc-url').value;
+
+                if (title && url) {
+                    documentation.push({
+                        title: title,
+                        description: description,
+                        url: url
+                    });
+                }
+            });
+
+            const projectData = {
+                project_id: projectId,
+                swagger_url: swaggerUrl,
+                phone_number: phoneNumber,
+                telegram_username: telegramUsername,
+                documentation: documentation
+            };
+
+            console.log('Sending project data:', projectData);
+
+            fetch('http://localhost:8080/v1/private/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(projectData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Project created successfully!');
+                console.log('Response:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

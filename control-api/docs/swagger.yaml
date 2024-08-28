@@ -1,0 +1,479 @@
+basePath: /
+definitions:
+  genproto.BodyUpt:
+    properties:
+      documentation:
+        items:
+          $ref: '#/definitions/genproto.Documentation'
+        type: array
+      phone_number:
+        type: string
+      swaggerUrl:
+        type: string
+      telegram_username:
+        type: string
+    type: object
+  genproto.BodyUptd:
+    properties:
+      developers:
+        items:
+          $ref: '#/definitions/genproto.Developer'
+        type: array
+      documentation:
+        items:
+          $ref: '#/definitions/genproto.Documentation'
+        type: array
+      name:
+        type: string
+      swaggerUrl:
+        type: string
+    type: object
+  genproto.CreateGroupReq:
+    properties:
+      developers:
+        items:
+          $ref: '#/definitions/genproto.Developer'
+        type: array
+      documentation:
+        items:
+          $ref: '#/definitions/genproto.Documentation'
+        type: array
+      name:
+        type: string
+      swaggerUrl:
+        type: string
+    type: object
+  genproto.CreatePrivateReq:
+    properties:
+      documentation:
+        items:
+          $ref: '#/definitions/genproto.Documentation'
+        type: array
+      phone_number:
+        type: string
+      swaggerUrl:
+        type: string
+      telegram_username:
+        type: string
+    type: object
+  genproto.Developer:
+    properties:
+      name:
+        type: string
+      phone_number:
+        type: string
+      telegram_username:
+        type: string
+    type: object
+  genproto.Documentation:
+    properties:
+      description:
+        type: string
+      title:
+        type: string
+      url:
+        type: string
+    type: object
+  genproto.GroupGet:
+    properties:
+      created_at:
+        type: string
+      developers:
+        $ref: '#/definitions/genproto.Developer'
+      documentation:
+        $ref: '#/definitions/genproto.Documentation'
+      id:
+        type: string
+      name:
+        type: string
+      swaggerUrl:
+        type: string
+    type: object
+  genproto.GroupListRes:
+    properties:
+      group:
+        items:
+          $ref: '#/definitions/genproto.GroupGet'
+        type: array
+    type: object
+  genproto.PrivateGet:
+    properties:
+      created_at:
+        type: string
+      documentation:
+        $ref: '#/definitions/genproto.Documentation'
+      id:
+        type: string
+      phone_number:
+        type: string
+      swaggerUrl:
+        type: string
+      telegram_username:
+        type: string
+    type: object
+  genproto.PrivateListRes:
+    properties:
+      private:
+        items:
+          $ref: '#/definitions/genproto.PrivateGet'
+        type: array
+    type: object
+  genproto.UpdateGr:
+    properties:
+      Body:
+        $ref: '#/definitions/genproto.BodyUptd'
+      id:
+        type: string
+    type: object
+  genproto.UpdatePrivat:
+    properties:
+      Body:
+        $ref: '#/definitions/genproto.BodyUpt'
+      id:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: API for Instant Delivery resources
+  title: Project Control API Documentation
+  version: "1.0"
+paths:
+  /v1/group/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get an group by ID
+      parameters:
+      - description: Group ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Group data
+          schema:
+            $ref: '#/definitions/genproto.GroupGet'
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "404":
+          description: Group not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get Group
+      tags:
+      - Group
+  /v1/group/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new group
+      parameters:
+      - description: group data
+        in: body
+        name: group
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.CreateGroupReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: message":"group created successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Create group
+      tags:
+      - Group
+  /v1/group/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an group by ID
+      parameters:
+      - description: Group ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: message":"Group deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Delete Group
+      tags:
+      - Group
+  /v1/group/list:
+    get:
+      consumes:
+      - application/json
+      description: List groups with filters
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of groups
+          schema:
+            $ref: '#/definitions/genproto.GroupListRes'
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: List Groups
+      tags:
+      - Group
+  /v1/group/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update an existing group by ID
+      parameters:
+      - description: Group update data
+        in: body
+        name: group
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.UpdateGr'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: message":"Group updated successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Update Group
+      tags:
+      - Group
+  /v1/private/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get an private by ID
+      parameters:
+      - description: Private ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Private data
+          schema:
+            $ref: '#/definitions/genproto.PrivateGet'
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "404":
+          description: Private not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get Private
+      tags:
+      - Private
+  /v1/private/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new private
+      parameters:
+      - description: private data
+        in: body
+        name: group
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.CreatePrivateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: message":"private created successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Create private
+      tags:
+      - Private
+  /v1/private/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an private by ID
+      parameters:
+      - description: Private ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: message":"Private deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Delete Private
+      tags:
+      - Private
+  /v1/private/list:
+    get:
+      consumes:
+      - application/json
+      description: List privaties with filters
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of privaties
+          schema:
+            $ref: '#/definitions/genproto.PrivateListRes'
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: List Privaties
+      tags:
+      - Private
+  /v1/private/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update an existing private by ID
+      parameters:
+      - description: Private ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Private update data
+        in: body
+        name: private
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.UpdatePrivat'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: message":"Private updated successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Update Private
+      tags:
+      - Private
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

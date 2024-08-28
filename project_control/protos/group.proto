@@ -1,0 +1,61 @@
+syntax="proto3";
+
+package proto;
+
+option go_package = "internal/pkg/genproto";
+
+import "protos/common.proto";
+
+service GroupService {
+    rpc CreateGroup(CreateGroupReq) returns (Void) {}
+    rpc GetGroup(ById) returns (GroupGet) {}
+    rpc ListGroups(GroupListReq) returns (GroupListRes) {}
+    rpc UpdateGroup(UpdateGr) returns (Void) {}
+    rpc DeleteGroup(DeleteGr) returns (Void) {}
+}
+
+
+message Developer{
+    string name = 1;
+    string phone_number = 2;
+    string telegram_username = 3;
+}
+
+message CreateGroupReq{
+    string swaggerUrl = 1;  
+    string name = 2;
+    repeated Developer developers = 3;
+    repeated Documentation documentation = 4;
+}
+
+message GroupGet {
+    string id = 1;
+    string swaggerUrl = 2;
+    string name = 3;
+    Developer developers = 4;
+    Documentation documentation = 5;
+    string created_at = 6;
+}
+
+message UpdateGr{
+    string id = 1;
+    BodyUptd Body = 2;
+}
+
+message BodyUptd{
+    string swaggerUrl = 1;  
+    string name = 2;
+    repeated Developer developers = 3;
+    repeated Documentation documentation = 4;
+}
+
+message DeleteGr{
+    string id = 1;
+}
+
+message GroupListReq{
+    Pagination pagination = 1;
+}
+message GroupListRes{
+    repeated GroupGet group = 1;
+}

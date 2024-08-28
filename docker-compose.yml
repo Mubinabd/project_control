@@ -1,0 +1,65 @@
+version: '3.9'
+
+services:
+  api-gateway:
+    container_name: gateway
+    build: ./control-api
+    ports:
+      - "8080:8080"
+    networks:
+      - GLhost
+
+  project_service:
+    container_name: project_service
+    build: ./project_control
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    ports:
+      - "20020:20020"
+    networks:
+      - GLhost
+
+  migrate:
+    image: migrate/migrate
+    networks:
+      - GLhost
+    volumes:
+      - ./migrations:/migrations
+    command: [
+      "-path", "/migrations", 
+      "-database", "postgres://postgres:1234@postgres-db:5432/project_control?sslmode=disable", 
+      "up"
+    ]
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+
+  postgres-db:
+    container_name: project_control
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      PGDATA: /data/postgres
+      POSTGRES_DB: project_control
+    volumes:
+      - db:/project-database/project-memory
+    ports:
+      - "5434:5434"
+    networks:
+      - GLhost
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d project_control -h localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  GLhost:
+    driver: bridge
+    external: true
+
+volumes:
+  db:

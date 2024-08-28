@@ -1,0 +1,13 @@
+p,unauthorized, /v1/group/create,POST
+p,unauthorized, /v1/group/:id,GET
+p,unauthorized, /v1/group/update/:id,UPDATE
+p,unauthorized, /v1/group/delete/:id,DELETE
+p,unauthorized, /v1/group/list,GET
+
+p,unauthorized, /v1/private/create,POST
+p,unauthorized, /v1/private/:id,GET
+p,unauthorized, /v1/private/update/:id,UPDATE
+p,unauthorized, /v1/private/delete/:id,DELETE
+p,unauthorized, /v1/private/list,GET
+
+	
