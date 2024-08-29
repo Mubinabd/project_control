@@ -23,7 +23,7 @@ func Engine(handler *handlers.Handlers) *gin.Engine {
 
 	router.Use(CORSMiddleware())
 
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	router.GET("/api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	router.POST("/register", handler.RegisterUser).Use(middleware.Middleware())
 	router.POST("/login", handler.LoginUser).Use(middleware.Middleware())
