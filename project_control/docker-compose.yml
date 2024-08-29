@@ -64,7 +64,7 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - 2218:2181
+      - 22018:20181
     networks:
       - GLhost
 
