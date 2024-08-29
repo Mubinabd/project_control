@@ -1,4 +1,4 @@
-CREATE TYPE role_type AS ENUM ('admin', 'teacher', 'ustoz', 'user','developer');
+CREATE TYPE role_type AS ENUM ('admin', 'teacher','developer');
 
 -- USER TABLE
 CREATE TABLE IF NOT EXISTS users (
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL,
     full_name VARCHAR(100),
     date_of_birth DATE,
-    role role_type NOT NULL DEFAULT 'user',
+    role role_type NOT NULL DEFAULT 'developer',
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW(),
     deleted_at BIGINT DEFAULT 0
