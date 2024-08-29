@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/Mubinabd/project_control/api/docs"
 	t "github.com/Mubinabd/project_control/api/token"
-	auth "github.com/Mubinabd/project_control/internal/genproto/auth"
+	auth "github.com/Mubinabd/project_control/pkg/genproto/auth"
 	"golang.org/x/exp/slog"
 )
 
@@ -22,7 +22,7 @@ import (
 // @Success 200 {object} auth.UserRes
 // @Failure 400 {object} string "Bad Request"
 // @Failure 500 {object} string "Internal Server Error"
-// @Router /user/profiles [get]
+// @Router /v1/user/profiles [get]
 func (h *Handlers) GetProfile(c *gin.Context) {
 	userID := getuserId(c)
 	req := &auth.GetById{
@@ -51,7 +51,7 @@ func (h *Handlers) GetProfile(c *gin.Context) {
 // @Success 200 {object} string "Profile updated successfully"
 // @Failure 400 {object} string "Bad Request"
 // @Failure 500 {object} string "Internal Server Error"
-// @Router /user/profiles [put]
+// @Router /v1/user/profiles [put]
 func (h *Handlers) EditProfile(c *gin.Context) {
 	userID := getuserId(c)
 
@@ -98,7 +98,7 @@ func (h *Handlers) EditProfile(c *gin.Context) {
 // @Success 200 {object} string "Password updated successfully"
 // @Failure 400 {object} string "Bad Request"
 // @Failure 500 {object} string "Internal Server Error"
-// @Router /user/passwords [put]
+// @Router /v1/user/passwords [put]
 func (h *Handlers) ChangePassword(c *gin.Context) {
 	userID := getuserId(c)
 
@@ -152,7 +152,7 @@ func (h *Handlers) ChangePassword(c *gin.Context) {
 // @Success 200 {object} auth.Setting
 // @Failure 400 {object} string "Bad Request"
 // @Failure 500 {object} string "Internal Server Error"
-// @Router /user/setting [get]
+// @Router /v1/user/setting [get]
 func (h *Handlers) GetSetting(c *gin.Context) {
 	userID := getuserId(c)
 
@@ -182,7 +182,7 @@ func (h *Handlers) GetSetting(c *gin.Context) {
 // @Success 200 {object} string "Setting updated successfully"
 // @Failure 400 {object} string "Bad Request"
 // @Failure 500 {object} string "Internal Server Error"
-// @Router /user/setting [put]
+// @Router /v1/user/setting [put]
 func (h *Handlers) EditSetting(c *gin.Context) {
 	userID := getuserId(c)
 
@@ -229,7 +229,7 @@ func (h *Handlers) EditSetting(c *gin.Context) {
 // @Success 200 {object} string "User deleted successfully"
 // @Failure 400 {object} string "Bad Request"
 // @Failure 500 {object} string "Internal Server Error"
-// @Router /user [delete]
+// @Router /v1/user [delete]
 func (h *Handlers) DeleteUser(c *gin.Context) {
 	userID := getuserId(c)
 

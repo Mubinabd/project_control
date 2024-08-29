@@ -13,6 +13,8 @@ type Storage struct {
 	Db       *sql.DB
 	GroupS   repository.GroupI
 	PrivateS repository.PrivateI
+	AuthS   repository.AuthI
+	UserS   repository.UserI
 }
 
 func New(cfg *config.Config) (*Storage, error) {
@@ -38,6 +40,8 @@ func New(cfg *config.Config) (*Storage, error) {
 		Db:       db,
 		GroupS:   NewGroupManager(db),
 		PrivateS: NewPrivateManager(db),
+		AuthS: NewAuthRepo(db),
+		UserS: NewUserRepo(db),
 	}, nil
 }
 func (s *Storage) Group() repository.GroupI {
@@ -52,4 +56,17 @@ func (s *Storage) Private() repository.PrivateI {
 		s.PrivateS = NewPrivateManager(s.Db)
 	}
 	return s.PrivateS
+}
+func (s *Storage) Auth() repository.AuthI {
+	if s.AuthS == nil {
+		s.AuthS = NewAuthRepo(s.Db)
+	}
+	return s.AuthS
+}
+
+func (s *Storage) User() repository.UserI {
+	if s.UserS == nil {
+		s.UserS = NewUserRepo(s.Db)
+	}
+	return s.UserS
 }

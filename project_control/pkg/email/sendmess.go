@@ -3,7 +3,7 @@ package email
 import (
 	"net/smtp"
 
-	"github.com/Mubinabd/project_control/internal/genproto/auth"
+	"github.com/Mubinabd/project_control/pkg/genproto/auth"
 	"golang.org/x/exp/slog"
 )
 

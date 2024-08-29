@@ -1,5 +1,0 @@
-DROP TABLE IF EXISTS settings;
-
-DROP TABLE IF EXISTS tokens;
-
-DROP TABLE IF EXISTS users;

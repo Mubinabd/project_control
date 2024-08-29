@@ -1,10 +1,10 @@
-package postgres
+package postgresql
 
 import (
 	"database/sql"
 	"fmt"
 
-	pb "github.com/Mubinabd/project_control/internal/genproto/auth"
+	pb "github.com/Mubinabd/project_control/pkg/genproto/auth"
 	"golang.org/x/crypto/bcrypt"
 )
 

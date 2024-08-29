@@ -4,12 +4,12 @@ import (
 	"context"
 	"encoding/json"
 
-	pb "github.com/Mubinabd/project_control/internal/genproto/auth"
-	"github.com/Mubinabd/project_control/service"
+	pb "github.com/Mubinabd/project_control/pkg/genproto/auth"
+	s "github.com/Mubinabd/project_control/internal/usecase/service"
 	"golang.org/x/exp/slog"
 )
 
-func UserRegisterHandler(u *service.AuthService) func(message []byte) {
+func UserRegisterHandler(u *s.AuthService) func(message []byte) {
 	return func(message []byte) {
 		var user pb.RegisterReq
 		if err := json.Unmarshal(message, &user); err != nil {

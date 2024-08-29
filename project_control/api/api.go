@@ -1,6 +1,7 @@
 package http
 
 import (
+	m "github.com/Mubinabd/project_control/api/middleware"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -50,6 +51,21 @@ func NewGin(h *handlers.Handlers) *gin.Engine {
 		private.PUT("/:id", h.UpdatePrivate)
 		private.DELETE("/delete/:id", h.DeletePrivate)
 		private.GET("/list", h.ListPrivates)
+	}
+	router.POST("/register", h.RegisterUser).Use(m.Middleware())
+	router.POST("/login", h.LoginUser).Use(m.Middleware())
+	router.POST("/forgot-password", h.ForgotPassword)
+	router.POST("/reset-password", h.ResetPassword)
+	router.GET("/users", h.GetAllUsers).Use(m.JWTMiddleware())
+
+	user := router.Group("/v1/user").Use(m.JWTMiddleware())
+	{
+		user.GET("/profiles", h.GetProfile)
+		user.PUT("/profiles", h.EditProfile)
+		user.PUT("/passwords", h.ChangePassword)
+		user.GET("/setting", h.GetSetting)
+		user.PUT("/setting", h.EditSetting)
+		user.DELETE("/", h.DeleteUser)
 	}
 
 	return router
