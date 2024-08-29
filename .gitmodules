@@ -1,9 +1,12 @@
 [submodule "auth/project_control"]
 	path = auth/project_control
 	url = https://github.com/Mubinabd/project_control.git
-[submodule "project_control/project_control"]
-	path = project_control/project_control
-	url = https://github.com/Mubinabd/project_control.git
 [submodule "control-api/project_control"]
 	path = control-api/project_control
 	url = https://github.com/Mubinabd/project_control.git
+[submodule "project_control/submodule"]
+	path = project_control/submodule
+	url = https://github.com/Mubinabd/submodule.git
+[submodule "auth/submodule"]
+	path = auth/submodule
+	url = https://github.com/Mubinabd/submodule.git
