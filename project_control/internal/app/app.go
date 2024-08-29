@@ -1,41 +1,36 @@
 package app
 
 import (
-	"log"
-	"net"
-
-	"github.com/Mubinabd/project_control/internal/pkg/config"
-	pb "github.com/Mubinabd/project_control/internal/pkg/genproto"
-	ps "github.com/Mubinabd/project_control/internal/pkg/postgres"
+	a "github.com/Mubinabd/project_control/api"
+	"github.com/Mubinabd/project_control/api/handlers"
 	"github.com/Mubinabd/project_control/internal/repository/postgresql"
-	service "github.com/Mubinabd/project_control/internal/usecase/service"
-
-	"google.golang.org/grpc"
+	s "github.com/Mubinabd/project_control/internal/usecase/service"
+	"github.com/Mubinabd/project_control/pkg/config"
+	"golang.org/x/exp/slog"
 )
 
-func Run(cfg config.Config) {
-
-	// connect to postgres
-	db, err := ps.New(&cfg)
+func Run(cfg *config.Config) {
+	// Postgres Connection
+	db, err := postgresql.New(cfg)
 	if err != nil {
-		log.Fatal(err)
+		slog.Error("can't connect to db: %v", err)
+		return
 	}
-	stg := postgresql.NewStorage(db.DB)
+	defer db.Db.Close()
+	slog.Info("Connected to Postgres")
 
-	group_service := service.NewGroupService(stg)
-	private_service := service.NewPrivateService(stg)
+	groupService := s.NewGroupService(db)
+	privateService := s.NewPrivateService(db)
 
-	lis, err := net.Listen("tcp", ":20020")
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
-	server := grpc.NewServer()
+	// HTTP Server
+	h := handlers.NewHandler(groupService, privateService)
 
-	pb.RegisterGroupServiceServer(server, group_service)
-	pb.RegisterPrivateServiceServer(server, private_service)
-	log.Println("Starting gRPC server on port", cfg.GRPCPort)
-	if err := server.Serve(lis); err != nil {
-		log.Fatal("gRPC server failed to start: ", err)
+	router := a.NewGin(h)
+	router.SetTrustedProxies(nil)
+
+	if err := router.Run(cfg.GRPCPort); err != nil {
+		slog.Error("can't start server: %v", err)
 	}
 
+	slog.Info("REST server started on port %s", cfg.GRPCPort)
 }

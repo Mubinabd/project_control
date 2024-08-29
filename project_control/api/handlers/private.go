@@ -4,7 +4,7 @@ import (
 	"context"
 	"strconv"
 
-	pb "github.com/Mubinabd/project_control/internal/pkg/genproto"
+	pb "github.com/Mubinabd/project_control/pkg/genproto"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,19 +20,17 @@ import (
 // @Failure 400 {string} string "Invalid request"
 // @Failure 500 {string} string "Internal server error"
 // @Router /v1/private/create [post]
-func (h *Handler) CreatePrivate(c *gin.Context) {
+func (h *Handlers) CreatePrivate(c *gin.Context) {
 	var req pb.CreatePrivateReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 
-		h.Logger.ERROR.Println("Failed to bind request", err)
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
 
-	_, err := h.Clients.Private.CreatePrivate(context.Background(), &req)
+	_, err := h.Private.CreatePrivate(context.Background(), &req)
 	if err != nil {
-		h.Logger.ERROR.Println("Failed to create private:", err)
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
@@ -52,15 +50,14 @@ func (h *Handler) CreatePrivate(c *gin.Context) {
 // @Failure 404 {string} string "Private not found"
 // @Failure 500 {string} string "Internal server error"
 // @Router /v1/private/{id} [get]
-func (h *Handler) GetPrivate(c *gin.Context) {
+func (h *Handlers) GetPrivate(c *gin.Context) {
 	req := pb.ById{}
 	id := c.Param("id")
 
 	req.Id = id
 
-	res, err := h.Clients.Private.GetPrivate(context.Background(), &req)
+	res, err := h.Private.GetPrivate(context.Background(), &req)
 	if err != nil {
-		h.Logger.ERROR.Println("Failed to get private", err)
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -81,7 +78,7 @@ func (h *Handler) GetPrivate(c *gin.Context) {
 // @Failure 400 {string} string "Invalid request"
 // @Failure 500 {string} string "Internal server error"
 // @Router /v1/private/update/{id} [put]
-func (h *Handler) UpdatePrivate(c *gin.Context) {
+func (h *Handlers) UpdatePrivate(c *gin.Context) {
 	id := c.Param("id")
 	var req pb.UpdatePrivat
 	req.Id = id
@@ -90,7 +87,7 @@ func (h *Handler) UpdatePrivate(c *gin.Context) {
 		return
 	}
 
-	_, err := h.Clients.Private.UpdatePrivate(context.Background(), &req)
+	_, err := h.Private.UpdatePrivate(context.Background(), &req)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -111,7 +108,7 @@ func (h *Handler) UpdatePrivate(c *gin.Context) {
 // @Failure 400 {string} string "Invalid request"
 // @Failure 500 {string} string "Internal server error"
 // @Router /v1/private/list [get]
-func (h *Handler) ListPrivates(c *gin.Context) {
+func (h *Handlers) ListPrivates(c *gin.Context) {
 	var filter pb.PrivateListReq
 
 	f := pb.Pagination{}
@@ -121,7 +118,6 @@ func (h *Handler) ListPrivates(c *gin.Context) {
 		if value, err := strconv.Atoi(limit); err == nil {
 			filter.Pagination.Limit = int32(value)
 		} else {
-			h.Logger.ERROR.Println("Invalid limit", err)
 			c.JSON(400, "Invalid limit value")
 			return
 		}
@@ -131,15 +127,13 @@ func (h *Handler) ListPrivates(c *gin.Context) {
 		if value, err := strconv.Atoi(offset); err == nil {
 			filter.Pagination.Offset = int32(value)
 		} else {
-			h.Logger.ERROR.Println("Invalid offset", err)
 			c.JSON(400, "Invalid offset value")
 			return
 		}
 	}
 
-	resp, err := h.Clients.Private.ListPrivates(context.Background(), &filter)
+	resp, err := h.Private.ListPrivates(context.Background(), &filter)
 	if err != nil {
-		h.Logger.ERROR.Println("Failed to list privaties", err)
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
@@ -158,13 +152,12 @@ func (h *Handler) ListPrivates(c *gin.Context) {
 // @Failure 400 {string} string "Invalid request"
 // @Failure 500 {string} string "Internal server error"
 // @Router /v1/private/delete/{id} [delete]
-func (h *Handler) DeletePrivate(c *gin.Context) {
+func (h *Handlers) DeletePrivate(c *gin.Context) {
 	id := c.Param("id")
 
 	req := &pb.DeletePrivat{Id: id}
-	_, err := h.Clients.Private.DeletePrivate(context.Background(), req)
+	_, err := h.Private.DeletePrivate(context.Background(), req)
 	if err != nil {
-		h.Logger.ERROR.Println("Failed to delete private:", err)
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}

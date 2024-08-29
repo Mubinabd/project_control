@@ -6,8 +6,8 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
-	_ "github.com/Mubinabd/project_control/docs"
-	"github.com/Mubinabd/project_control/internal/http/handlers"
+	_ "github.com/Mubinabd/project_control/api/docs"
+	"github.com/Mubinabd/project_control/api/handlers"
 )
 
 // @title Project Control API Documentation
@@ -17,7 +17,7 @@ import (
 // @securityDefinitions.apikey BearerAuth
 // @in header
 // @name Authorization
-func NewGin(h *handlers.Handler) *gin.Engine {
+func NewGin(h *handlers.Handlers) *gin.Engine {
 	router := gin.Default()
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

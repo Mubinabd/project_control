@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/Mubinabd/project_control/internal/repository"
-	pb "github.com/Mubinabd/project_control/internal/pkg/genproto"
+	pb "github.com/Mubinabd/project_control/pkg/genproto"
 )
 
 type GroupService struct {

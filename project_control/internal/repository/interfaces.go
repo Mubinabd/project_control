@@ -1,7 +1,7 @@
 package repository
 
 import (
-	pb "github.com/Mubinabd/project_control/internal/pkg/genproto"
+	pb "github.com/Mubinabd/project_control/pkg/genproto"
 )
 
 type StorageI interface {

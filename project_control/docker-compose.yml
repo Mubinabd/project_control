@@ -1,22 +1,15 @@
 version: '3.9'
 
 services:
-  api-gateway:
-    container_name: gateway
-    build: ./control-api
-    ports:
-      - "8080:8080"
-    networks:
-      - GLhost
 
   project_service:
     container_name: project_service
-    build: ./project_control
+    build: ./
     depends_on:
       postgres-db:
         condition: service_healthy
     ports:
-      - "20020:20020"
+      - "8081:8080"
     networks:
       - GLhost
 

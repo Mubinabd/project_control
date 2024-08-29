@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"strings"
 
+	token "github.com/Mubinabd/project_control/api/token"
 	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
-	token "github.com/Mubinabd/project_control/internal/http/token"
 )
 
 const (
@@ -23,7 +23,7 @@ func NewAuth(enforce *casbin.Enforcer) gin.HandlerFunc {
 			return
 		}
 
-		allow, err := CheckPermission(ctx.FullPath(),ctx.Request, enforce)
+		allow, err := CheckPermission(ctx.FullPath(), ctx.Request, enforce)
 
 		if err != nil {
 			valid, _ := err.(jwt.ValidationError)
@@ -63,7 +63,7 @@ func GetRole(r *http.Request) (string, error) {
 	return claims["role"].(string), nil
 }
 
-func CheckPermission(path string,r *http.Request, enforcer *casbin.Enforcer) (bool, error) {
+func CheckPermission(path string, r *http.Request, enforcer *casbin.Enforcer) (bool, error) {
 	role, err := GetRole(r)
 	if err != nil {
 		log.Println("Error while getting role from token: ", err)
@@ -100,4 +100,3 @@ func RequireRefresh(c *gin.Context) {
 		"error": "Access token expired",
 	})
 }
-

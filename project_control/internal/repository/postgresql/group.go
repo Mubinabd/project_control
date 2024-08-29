@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	pb "github.com/Mubinabd/project_control/internal/pkg/genproto"
+	pb "github.com/Mubinabd/project_control/pkg/genproto"
 	"strings"
 	"time"
 

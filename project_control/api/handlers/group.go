@@ -4,7 +4,7 @@ import (
 	"context"
 	"strconv"
 
-	pb "github.com/Mubinabd/project_control/internal/pkg/genproto"
+	pb "github.com/Mubinabd/project_control/pkg/genproto"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,19 +20,16 @@ import (
 // @Failure 400 {string} string "Invalid request"
 // @Failure 500 {string} string "Internal server error"
 // @Router /v1/group/create [post]
-func (h *Handler) CreateGroup(c *gin.Context) {
+func (h *Handlers) CreateGroup(c *gin.Context) {
 	var req pb.CreateGroupReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 
-		h.Logger.ERROR.Println("Failed to bind request", err)
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
-
-	_, err := h.Clients.Group.CreateGroup(context.Background(), &req)
+	_, err := h.Group.CreateGroup(context.Background(), &req)
 	if err != nil {
-		h.Logger.ERROR.Println("Failed to create group:", err)
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
@@ -52,15 +49,14 @@ func (h *Handler) CreateGroup(c *gin.Context) {
 // @Failure 404 {string} string "Group not found"
 // @Failure 500 {string} string "Internal server error"
 // @Router /v1/group/{id} [get]
-func (h *Handler) GetGroup(c *gin.Context) {
+func (h *Handlers) GetGroup(c *gin.Context) {
 	req := pb.ById{}
 	id := c.Param("id")
 
 	req.Id = id
 
-	res, err := h.Clients.Group.GetGroup(context.Background(), &req)
+	res, err := h.Group.GetGroup(context.Background(), &req)
 	if err != nil {
-		h.Logger.ERROR.Println("Failed to get group", err)
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -80,14 +76,14 @@ func (h *Handler) GetGroup(c *gin.Context) {
 // @Failure 400 {string} string "Invalid request"
 // @Failure 500 {string} string "Internal server error"
 // @Router /v1/group/update/{id} [put]
-func (h *Handler) UpdateGroup(c *gin.Context) {
+func (h *Handlers) UpdateGroup(c *gin.Context) {
 	var req pb.UpdateGr
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
-	_, err := h.Clients.Group.UpdateGroup(context.Background(), &req)
+	_, err := h.Group.UpdateGroup(context.Background(), &req)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -108,7 +104,7 @@ func (h *Handler) UpdateGroup(c *gin.Context) {
 // @Failure 400 {string} string "Invalid request"
 // @Failure 500 {string} string "Internal server error"
 // @Router /v1/group/list [get]
-func (h *Handler) ListGroups(c *gin.Context) {
+func (h *Handlers) ListGroups(c *gin.Context) {
 	var filter pb.GroupListReq
 
 	f := pb.Pagination{}
@@ -118,7 +114,6 @@ func (h *Handler) ListGroups(c *gin.Context) {
 		if value, err := strconv.Atoi(limit); err == nil {
 			filter.Pagination.Limit = int32(value)
 		} else {
-			h.Logger.ERROR.Println("Invalid limit", err)
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
@@ -128,15 +123,13 @@ func (h *Handler) ListGroups(c *gin.Context) {
 		if value, err := strconv.Atoi(offset); err == nil {
 			filter.Pagination.Offset = int32(value)
 		} else {
-			h.Logger.ERROR.Println("Invalid offset", err)
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
 	}
 
-	resp, err := h.Clients.Group.ListGroups(context.Background(), &filter)
+	resp, err := h.Group.ListGroups(context.Background(), &filter)
 	if err != nil {
-		h.Logger.ERROR.Println("Failed to list groups", err)
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
@@ -155,13 +148,12 @@ func (h *Handler) ListGroups(c *gin.Context) {
 // @Failure 400 {string} string "Invalid request"
 // @Failure 500 {string} string "Internal server error"
 // @Router /v1/group/delete/{id} [delete]
-func (h *Handler) DeleteGroup(c *gin.Context) {
+func (h *Handlers) DeleteGroup(c *gin.Context) {
 	id := c.Param("id")
 
 	req := &pb.DeleteGr{Id: id}
-	_, err := h.Clients.Group.DeleteGroup(context.Background(), req)
+	_, err := h.Group.DeleteGroup(context.Background(), req)
 	if err != nil {
-		h.Logger.ERROR.Println("Failed to delete group:", err)
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}

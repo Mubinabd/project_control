@@ -17,6 +17,7 @@ type Config struct {
 	PostgresPassword string
 	PostgresDatabase string
 	LogPath          string
+	ControlURL      string
 
 	DefaultOffset string
 	DefaultLimit  string
@@ -31,11 +32,11 @@ func Load() Config {
 
 	config.GRPCPort = cast.ToString(getOrReturnDefaultValue("GRPC_PORT", ":"))
 
-	config.PostgresHost = cast.ToString(getOrReturnDefaultValue("POSTGRES_HOST", "project_control"))
-	config.PostgresPort = cast.ToInt(getOrReturnDefaultValue("POSTGRES_PORT", 5434))
-	config.PostgresUser = cast.ToString(getOrReturnDefaultValue("POSTGRES_USER", "postgres"))
+	config.PostgresHost = cast.ToString(getOrReturnDefaultValue("POSTGRES_HOST", "localst"))
+	config.PostgresPort = cast.ToInt(getOrReturnDefaultValue("POSTGRES_PORT", 542))
+	config.PostgresUser = cast.ToString(getOrReturnDefaultValue("POSTGRES_USER", "pogres"))
 	config.PostgresPassword = cast.ToString(getOrReturnDefaultValue("POSTGRES_PASSWORD", "1234"))
-	config.PostgresDatabase = cast.ToString(getOrReturnDefaultValue("POSTGRES_DATABASE", "project_control"))
+	config.PostgresDatabase = cast.ToString(getOrReturnDefaultValue("POSTGRES_DATABASE", "proycts"))
 	config.LogPath = cast.ToString(getOrReturnDefaultValue("LOG_PATH", "logs/info.log"))
 
 	config.DefaultOffset = cast.ToString(getOrReturnDefaultValue("DEFAULT_OFFSET", "0"))
