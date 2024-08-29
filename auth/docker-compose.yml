@@ -34,7 +34,7 @@ services:
 
   redis:
     image: "redis:latest"
-    container_name: redis_blacklist
+    container_name: redis_auth
     ports:
       - "6377:6379"
     networks:
@@ -42,7 +42,7 @@ services:
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.4
-    container_name: zookeeper_blacklist
+    container_name: zookeeper_auth
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -62,7 +62,7 @@ services:
       - ntwrk
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper_blacklist:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper_auth:2181
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT

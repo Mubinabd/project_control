@@ -26,7 +26,7 @@ func Run(cfg *config.Config) {
 
 	// Redis Connection
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "redis_blacklist:6379",
+		Addr:     "redis_auth:6379",
 		Password: "",
 		DB:       0,
 	})
