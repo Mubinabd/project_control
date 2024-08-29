@@ -10,5 +10,5 @@ WORKDIR /app
 COPY --from=builder /app/project .
 COPY .env .env 
 RUN chmod +x project
-EXPOSE 8080
+EXPOSE 8081
 CMD ["./project"]
