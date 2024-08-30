@@ -318,7 +318,7 @@ func (h *Handlers) GetAllUsers(c *gin.Context) {
 
 	res, err := h.Auth.GetAllUsers(context.Background(), req)
 	if err != nil {
-		slog.Error("failed to get all users: %v", err)
+		slog.Error("failed to get all developers: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
