@@ -10,3 +10,6 @@
 [submodule "auth/submodule"]
 	path = auth/submodule
 	url = https://github.com/Mubinabd/submodule.git
+[submodule "submodule"]
+	path = submodule
+	url = https://github.com/Mubinabd/submodule.git

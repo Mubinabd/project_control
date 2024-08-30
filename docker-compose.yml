@@ -4,7 +4,7 @@ services:
 
   project_service:
     container_name: project_service
-    build: ./
+    build: .
     depends_on:
       postgres-db:
         condition: service_healthy
