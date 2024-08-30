@@ -28,7 +28,7 @@ var (
 		users: make(map[string]struct{}),
 	}
 
-	from     = "mirjalilovaferuza952@gmail.com"
+	from     = "bahodirovamubina505@gmail.com"
 	password = "icuu qtla cwlc wstr"
 )
 
