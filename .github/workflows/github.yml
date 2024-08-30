@@ -32,12 +32,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd ./project_control  
+          cd project_control  
           go mod tidy
 
       - name: Build
         run: |
-          cd ./project_control  # Assuming main.go is inside the "cmd" directory
+          cd project_control  # Assuming main.go is inside the "service" directory
           go build -o bin/main cmd/main.go
 
   test:
@@ -64,9 +64,8 @@ jobs:
 
       - name: Run tests
         run: |
-          cd ./project_control  
+          cd project_control  
           go test ./...
-
   deploy:
     runs-on: ubuntu-latest
     needs: test
@@ -78,6 +77,6 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          ls -l ~/.ssh
+          head -n 10 ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-
-      
