@@ -56,7 +56,7 @@ func NewGin(h *handlers.Handlers) *gin.Engine {
 	router.POST("/login", h.LoginUser).Use(m.Middleware())
 	router.POST("/forgot-password", h.ForgotPassword)
 	router.POST("/reset-password", h.ResetPassword)
-	router.GET("/users", h.GetAllUsers).Use(m.JWTMiddleware())
+	router.GET("/developers", h.GetAllUsers).Use(m.JWTMiddleware())
 
 	user := router.Group("/v1/user").Use(m.JWTMiddleware())
 	{

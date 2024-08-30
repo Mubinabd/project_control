@@ -264,8 +264,8 @@ func isValidEmail(email string) bool {
 	return re.MatchString(email)
 }
 
-// @Summary 		Get all users
-// @Description     Get all users
+// @Summary 		Get all developers
+// @Description     Get all developers
 // @Tags       	    auth
 // @Accept 			json
 // @Produce 		json
@@ -277,7 +277,7 @@ func isValidEmail(email string) bool {
 // @Success 200 {object} auth.ListUserRes
 // @Failure 400 {object} string "Bad Request"
 // @Failure 500 {object} string "Internal Server Error"
-// @Router /users [get]
+// @Router /developers [get]
 func (h *Handlers) GetAllUsers(c *gin.Context) {
 	limit := c.Query("limit")
 	offset := c.Query("offset")

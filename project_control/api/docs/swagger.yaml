@@ -223,6 +223,48 @@ info:
   title: Project Control API Documentation
   version: "1.0"
 paths:
+  /developers:
+    get:
+      consumes:
+      - application/json
+      description: Get all developers
+      parameters:
+      - description: UserName
+        in: query
+        name: username
+        type: string
+      - description: Full Name
+        in: query
+        name: full_name
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.ListUserRes'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get all developers
+      tags:
+      - auth
   /forgot-password:
     post:
       consumes:
@@ -345,48 +387,6 @@ paths:
           schema:
             type: string
       summary: Reset password
-      tags:
-      - auth
-  /users:
-    get:
-      consumes:
-      - application/json
-      description: Get all users
-      parameters:
-      - description: UserName
-        in: query
-        name: username
-        type: string
-      - description: Full Name
-        in: query
-        name: full_name
-        type: string
-      - description: Limit
-        in: query
-        name: limit
-        type: integer
-      - description: Offset
-        in: query
-        name: offset
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/auth.ListUserRes'
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      security:
-      - BearerAuth: []
-      summary: Get all users
       tags:
       - auth
   /v1/group/{id}:
