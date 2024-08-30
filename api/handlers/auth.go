@@ -29,7 +29,7 @@ var (
 	}
 
 	from     = "bahodirovamubina505@gmail.com"
-	password = "icuu qtla cwlc wstr"
+	password = "qext gmhd owss kqpe"
 )
 
 // RegisterUser handles user registration
