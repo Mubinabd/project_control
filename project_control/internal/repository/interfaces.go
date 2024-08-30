@@ -30,18 +30,18 @@ type PrivateI interface {
 
 type AuthI interface {
 	Register(*auth.RegisterReq) (*auth.Void, error)
-    Login(*auth.LoginReq) (*auth.User, error)
-    ForgotPassword(*auth.GetByEmail) (*auth.Void, error)
-    ResetPassword(*auth.ResetPassReq) (*auth.Void, error)
-    SaveRefreshToken(*auth.RefToken) (*auth.Void, error)
-    GetAllUsers(*auth.ListUserReq) (*auth.ListUserRes, error)
+	Login(*auth.LoginReq) (*auth.User, error)
+	ForgotPassword(*auth.GetByEmail) (*auth.Void, error)
+	ResetPassword(*auth.ResetPassReq) (*auth.Void, error)
+	SaveRefreshToken(*auth.RefToken) (*auth.Void, error)
+	GetAllUsers(*auth.ListUserReq) (*auth.ListUserRes, error)
 }
 
 type UserI interface {
 	GetProfile(*auth.GetById) (*auth.UserRes, error)
-    EditProfile(*auth.UserRes) (*auth.UserRes, error)
-    ChangePassword(*auth.ChangePasswordReq) (*auth.Void, error)
-    GetSetting(*auth.GetById) (*auth.Setting, error)
-    EditSetting(*auth.SettingReq) (*auth.Void, error)
-    DeleteUser(*auth.GetById) (*auth.Void, error)
+	EditProfile(*auth.UserRes) (*auth.UserRes, error)
+	ChangePassword(*auth.ChangePasswordReq) (*auth.Void, error)
+	GetSetting(*auth.GetById) (*auth.Setting, error)
+	EditSetting(*auth.SettingReq) (*auth.Void, error)
+	DeleteUser(*auth.GetById) (*auth.Void, error)
 }

@@ -17,7 +17,7 @@ type Config struct {
 	PostgresPassword string
 	PostgresDatabase string
 	LogPath          string
-	ControlURL      string
+	ControlURL       string
 
 	DefaultOffset string
 	DefaultLimit  string

@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 
-	pb "github.com/Mubinabd/project_control/pkg/genproto/auth"
 	"github.com/Mubinabd/project_control/internal/usecase/service"
+	pb "github.com/Mubinabd/project_control/pkg/genproto/auth"
 	"golang.org/x/exp/slog"
 )
 
@@ -45,17 +45,17 @@ func UserEditPasswordHandler(u *service.UserService) func(message []byte) {
 
 func UserEditSettingHandler(u *service.UserService) func(message []byte) {
 	return func(message []byte) {
-        var user pb.SettingReq
-        if err := json.Unmarshal(message, &user); err != nil {
-            slog.Error("Cannot unmarshal JSON: %v", err)
-            return
-        }
+		var user pb.SettingReq
+		if err := json.Unmarshal(message, &user); err != nil {
+			slog.Error("Cannot unmarshal JSON: %v", err)
+			return
+		}
 
-        _, err := u.EditSetting(context.Background(), &user)
-        if err != nil {
-            slog.Error("failed to edit user settings via Kafka: %v", err)
-            return
-        }
-        slog.Info("User settings updated")
-    }
+		_, err := u.EditSetting(context.Background(), &user)
+		if err != nil {
+			slog.Error("failed to edit user settings via Kafka: %v", err)
+			return
+		}
+		slog.Info("User settings updated")
+	}
 }

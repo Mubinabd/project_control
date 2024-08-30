@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/gin-gonic/gin"
 	t "github.com/Mubinabd/project_control/api/token"
+	"github.com/gin-gonic/gin"
 )
 
 func Middleware() gin.HandlerFunc {

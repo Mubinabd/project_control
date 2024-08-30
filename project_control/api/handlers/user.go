@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	_ "github.com/Mubinabd/project_control/api/docs"
 	t "github.com/Mubinabd/project_control/api/token"
 	auth "github.com/Mubinabd/project_control/pkg/genproto/auth"
+	"github.com/gin-gonic/gin"
 	"golang.org/x/exp/slog"
 )
 

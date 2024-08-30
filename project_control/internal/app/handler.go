@@ -1,8 +1,8 @@
 package app
 
 import (
-	kafka "github.com/Mubinabd/project_control/pkg/kafka/consumer"
 	"github.com/Mubinabd/project_control/internal/usecase/service"
+	kafka "github.com/Mubinabd/project_control/pkg/kafka/consumer"
 	"golang.org/x/exp/slog"
 )
 

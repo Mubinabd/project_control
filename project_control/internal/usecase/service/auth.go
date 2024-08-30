@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	pb "github.com/Mubinabd/project_control/pkg/genproto/auth"
 	st "github.com/Mubinabd/project_control/internal/repository/postgresql"
+	pb "github.com/Mubinabd/project_control/pkg/genproto/auth"
 )
 
 type AuthService struct {

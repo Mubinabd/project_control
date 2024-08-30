@@ -6,9 +6,9 @@ import (
 	"log"
 	"time"
 
+	pb "github.com/Mubinabd/project_control/pkg/genproto/auth"
 	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
-	pb "github.com/Mubinabd/project_control/pkg/genproto/auth"
 )
 
 const signingKey = "secret_key"

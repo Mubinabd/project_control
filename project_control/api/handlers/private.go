@@ -28,7 +28,6 @@ func (h *Handlers) CreatePrivate(c *gin.Context) {
 		return
 	}
 
-
 	_, err := h.Private.CreatePrivate(context.Background(), &req)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})

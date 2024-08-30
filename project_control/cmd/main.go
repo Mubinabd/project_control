@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/Mubinabd/project_control/pkg/config"
 	"github.com/Mubinabd/project_control/internal/app"
+	"github.com/Mubinabd/project_control/pkg/config"
 	_ "github.com/lib/pq"
 )
 

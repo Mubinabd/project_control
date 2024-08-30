@@ -8,7 +8,7 @@ import (
 	"github.com/Mubinabd/project_control/internal/repository/postgresql"
 	s "github.com/Mubinabd/project_control/internal/usecase/service"
 	"github.com/Mubinabd/project_control/pkg/config"
-	"github.com/Mubinabd/project_control/pkg/kafka/consumer"
+	kafka "github.com/Mubinabd/project_control/pkg/kafka/consumer"
 	prd "github.com/Mubinabd/project_control/pkg/kafka/producer"
 	"github.com/go-redis/redis/v8"
 	"golang.org/x/exp/slog"
