@@ -36,7 +36,7 @@ CREATE TABLE documentation(
 
 
 
-CREATE TYPE role_type AS ENUM ('admin', 'teacher','developer');
+CREATE TYPE role_type AS ENUM ('admin', 'teacher','developer','user');
 
 -- USER TABLE
 CREATE TABLE users (
