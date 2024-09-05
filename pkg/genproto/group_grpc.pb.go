@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.4.0
 // - protoc             v3.12.4
-// source: protos/group.proto
+// source: submodule/protos/protos/group.proto
 
 package genproto
 
@@ -258,5 +258,5 @@ var GroupService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "protos/group.proto",
+	Metadata: "submodule/protos/protos/group.proto",
 }

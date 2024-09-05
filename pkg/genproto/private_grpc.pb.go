@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.4.0
 // - protoc             v3.12.4
-// source: protos/private.proto
+// source: submodule/protos/protos/private.proto
 
 package genproto
 
@@ -258,5 +258,5 @@ var PrivateService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "protos/private.proto",
+	Metadata: "submodule/protos/protos/private.proto",
 }

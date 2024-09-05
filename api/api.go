@@ -1,7 +1,10 @@
 package http
 
 import (
+	"log"
+
 	m "github.com/Mubinabd/project_control/api/middleware"
+	"github.com/casbin/casbin/v2"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -30,11 +33,11 @@ func NewGin(h *handlers.Handlers) *gin.Engine {
 		AllowCredentials: true,
 	}))
 
-	// enforcer, err := casbin.NewEnforcer("./internal/http/casbin/model.conf", "./internal/http/casbin/policy.csv")
-	// if err != nil {
-	// 	log.Println("Error while creating enforcer: ", err)
-	// }
-	// router.Use(middlerware.NewAuth(enforcer))
+	enforcer, err := casbin.NewEnforcer("./api/casbin/model.conf", "./api/casbin/policy.csv")
+	if err != nil {
+		log.Println("Error while creating enforcer: ", err)
+	}
+	router.Use(m.NewAuth(enforcer))
 
 	group := router.Group("/v1/group")
 	{

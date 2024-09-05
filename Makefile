@@ -4,7 +4,7 @@ run:
 	go run main.go
 
 proto-gen:
-	protoc --go_out=./ --go-grpc_out=./ submodule/submodule/protos/*.proto
+	protoc --go_out=./ --go-grpc_out=./ submodule/protos/auth_service/*.proto
 
 migrate_up:
 	migrate -path migrations -database postgres://postgres:postgres@localhost:5432/project_control?sslmode=disable -verbose up
