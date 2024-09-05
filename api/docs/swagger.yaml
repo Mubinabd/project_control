@@ -49,6 +49,8 @@ definitions:
         type: string
       password:
         type: string
+      role:
+        type: string
       username:
         type: string
     type: object

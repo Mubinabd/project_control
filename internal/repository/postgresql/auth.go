@@ -27,8 +27,8 @@ func (r *AuthRepo) Register(req *pb.RegisterReq) (*pb.Void, error) {
 	}
 
 	var id string
-	query := `INSERT INTO users (username, email, password, full_name, date_of_birth) VALUES ($1, $2, $3, $4, $5) RETURNING id`
-	err = tr.QueryRow(query, req.Username, req.Email, req.Password, req.FullName, req.DateOfBirth).Scan(&id)
+	query := `INSERT INTO users (username, email, password, full_name, date_of_birth,role) VALUES ($1, $2, $3, $4, $5,$6) RETURNING id`
+	err = tr.QueryRow(query, req.Username, req.Email, req.Password, req.FullName, req.DateOfBirth,req.Role).Scan(&id)
 	if err != nil {
 		tr.Rollback()
 		return nil, err
