@@ -113,7 +113,7 @@ func GetRole(r *http.Request) (string, error) {
 func NewAuth(enforce *casbin.Enforcer) gin.HandlerFunc {
 
 	return func(ctx *gin.Context) {
-		if strings.HasPrefix(ctx.Request.URL.Path, "/api/swagger/") {
+		if strings.HasPrefix(ctx.Request.URL.Path, "/swagger/") {
 			ctx.Next()
 			return
 		}

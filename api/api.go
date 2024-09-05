@@ -1,10 +1,7 @@
 package http
 
 import (
-	"log"
-
 	m "github.com/Mubinabd/project_control/api/middleware"
-	"github.com/casbin/casbin/v2"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -33,12 +30,13 @@ func NewGin(h *handlers.Handlers) *gin.Engine {
 		AllowCredentials: true,
 	}))
 
-	enforcer, err := casbin.NewEnforcer("./api/casbin/model.conf", "./api/casbin/policy.csv")
-	if err != nil {
-		log.Println("Error while creating enforcer: ", err)
-	}
+	// enforcer, err := casbin.NewEnforcer("./api/casbin/model.conf", "./api/casbin/policy.csv")
+	// if err != nil {
+	// 	log.Println("Error while creating enforcer: ", err)
+	// }
+	// router.Use(m.NewAuth(enforcer))
 
-	group := router.Group("/v1/group").Use(m.NewAuth(enforcer))
+	group := router.Group("/v1/group").Use(m.JWTMiddleware())
 	{
 		group.POST("/create", h.CreateGroup)
 		group.GET("/:id", h.GetGroup)
@@ -46,7 +44,7 @@ func NewGin(h *handlers.Handlers) *gin.Engine {
 		group.DELETE("/delete/:id", h.DeleteGroup)
 		group.GET("/list", h.ListGroups)
 	}
-	private := router.Group("/v1/private").Use(m.NewAuth(enforcer))
+	private := router.Group("/v1/private").Use(m.JWTMiddleware())
 	{
 		private.POST("/create", h.CreatePrivate)
 		private.GET("/:id", h.GetPrivate)
