@@ -37,9 +37,8 @@ func NewGin(h *handlers.Handlers) *gin.Engine {
 	if err != nil {
 		log.Println("Error while creating enforcer: ", err)
 	}
-	router.Use(m.NewAuth(enforcer))
 
-	group := router.Group("/v1/group")
+	group := router.Group("/v1/group").Use(m.NewAuth(enforcer))
 	{
 		group.POST("/create", h.CreateGroup)
 		group.GET("/:id", h.GetGroup)
@@ -47,7 +46,7 @@ func NewGin(h *handlers.Handlers) *gin.Engine {
 		group.DELETE("/delete/:id", h.DeleteGroup)
 		group.GET("/list", h.ListGroups)
 	}
-	private := router.Group("/v1/private")
+	private := router.Group("/v1/private").Use(m.NewAuth(enforcer))
 	{
 		private.POST("/create", h.CreatePrivate)
 		private.GET("/:id", h.GetPrivate)
