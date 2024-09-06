@@ -76,7 +76,9 @@ func (s *GroupRepo) GetGroup(req *pb.ById) (*pb.GroupGet, error) {
 		ON
 			g.id = doc.group_id
 		WHERE 
-			g.id = $1`
+			g.id = $1
+		AND
+			g.deleted_at = 0`
 
 	row := s.db.QueryRow(query, req.Id)
 
@@ -213,7 +215,6 @@ func (s *GroupRepo) UpdateGroup(req *pb.UpdateGr) (*pb.Void, error) {
 		}
 	}
 
-	// Update developers
 	for _, dev := range req.Body.Developers {
 		var existingDevID string
 		checkQuery := `SELECT id FROM developers WHERE group_id = $1 AND phone_number = $2`

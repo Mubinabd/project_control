@@ -60,7 +60,9 @@ func (s *PrivateRepo) GetPrivate(req *pb.ById) (*pb.PrivateGet, error) {
 		ON
 			p.id = d.private_id
 		WHERE 
-			p.id = $1`
+			p.id = $1
+		AND
+			p.deleted_at = 0`
 
 	row := s.db.QueryRow(query, req.Id)
 
