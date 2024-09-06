@@ -12,7 +12,10 @@ CREATE TABLE developers(
     group_id uuid NOT NULL REFERENCES groups(id),
     name VARCHAR(20) NOT NULL,
     phone_number VARCHAR(20) NOT NULL,
-    telegram_username VARCHAR(20) NOT NULL
+    telegram_username VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP,
+    deleted_at BIGINT DEFAULT 0
 );
 
 CREATE TABLE private(
@@ -31,7 +34,10 @@ CREATE TABLE documentation(
     private_id uuid REFERENCES private(id),
     title TEXT NOT NULL,
     description text not NULL,
-    url VARCHAR(255) NOT NULL
+    url VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP ,
+    deleted_at BIGINT DEFAULT 0
 );
 
 
