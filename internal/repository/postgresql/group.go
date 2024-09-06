@@ -321,7 +321,7 @@ func (s *GroupRepo) DeleteGroup(req *pb.DeleteGr) (*pb.Void, error) {
 	SET
 		deleted_at = extract(epoch from now())
 	WHERE
-		id = $1
+		group_id = $1
 	`
 	_, err = s.db.Exec(queryDocs, req.Id)
 	if err != nil {
@@ -335,7 +335,7 @@ func (s *GroupRepo) DeleteGroup(req *pb.DeleteGr) (*pb.Void, error) {
 	SET
 		deleted_at = extract(epoch from now())
 	WHERE
-		id = $1
+		group_id = $1
 	`
 	_, err = s.db.Exec(queryDevs, req.Id)
 	if err != nil {

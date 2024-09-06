@@ -210,7 +210,7 @@ func (s *PrivateRepo) DeletePrivate(req *pb.DeletePrivat) (*pb.Void, error) {
 	SET
 		deleted_at = extract(epoch from now())
 	WHERE
-		id = $1
+		private_id = $1
 	`
 	_, err = s.db.Exec(queryDocs, req.Id)
 	if err != nil {
