@@ -36,13 +36,6 @@ func JWTMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-
-		// if !strings.HasPrefix(authHeader, "Bearer ") {
-		// 	c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid authorization header format"})
-		// 	c.Abort()
-		// 	return
-		// }
-
 		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
 
 		valid, err := t.ValidateToken(tokenString)
@@ -70,12 +63,6 @@ func GetUserId(r *http.Request) (string, error) {
 	if jwtToken == "" || strings.Contains(jwtToken, "Basic") {
 		return "unauthorized", nil
 	}
-
-	// if !strings.HasPrefix(jwtToken, "Bearer ") {
-	// 	return "unauthorized", errors.New("invalid authorization header format")
-	// }
-
-	// tokenString := strings.TrimPrefix(jwtToken, "Bearer ")
 
 	claims, err := t.ExtractClaim(jwtToken)
 	if err != nil {
@@ -142,7 +129,6 @@ func CheckPermission(path string, r *http.Request, enforcer *casbin.Enforcer) (b
 		return false, err
 	}
 	method := r.Method
-	// path := r.URL.Path
 
 	allowed, err := enforcer.Enforce(role, path, method)
 	if err != nil {
