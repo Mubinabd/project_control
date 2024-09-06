@@ -203,5 +203,19 @@ func (s *PrivateRepo) DeletePrivate(req *pb.DeletePrivat) (*pb.Void, error) {
 		log.Println("Error while deleting Privates", err)
 		return nil, err
 	}
+
+	queryDocs := `
+	UPDATE
+		private
+	SET
+		deleted_at = extract(epoch from now())
+	WHERE
+		id = $1
+	`
+	_, err = s.db.Exec(queryDocs, req.Id)
+	if err != nil {
+		log.Println("Error while deleting related documentation", err)
+		return nil, err
+	}
 	return &pb.Void{}, nil
 }

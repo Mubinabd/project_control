@@ -307,10 +307,39 @@ func (s *GroupRepo) DeleteGroup(req *pb.DeleteGr) (*pb.Void, error) {
 	WHERE
 		id = $1
 	`
+	
 
 	_, err := s.db.Exec(query, req.Id)
 	if err != nil {
 		log.Println("Error while deleting groups", err)
+		return nil, err
+	}
+
+	queryDocs := `
+	UPDATE
+		groups
+	SET
+		deleted_at = extract(epoch from now())
+	WHERE
+		id = $1
+	`
+	_, err = s.db.Exec(queryDocs, req.Id)
+	if err != nil {
+		log.Println("Error while deleting related documentation", err)
+		return nil, err
+	}
+
+	queryDevs := `
+	UPDATE
+		groups
+	SET
+		deleted_at = extract(epoch from now())
+	WHERE
+		id = $1
+	`
+	_, err = s.db.Exec(queryDevs, req.Id)
+	if err != nil {
+		log.Println("Error while deleting related developers", err)
 		return nil, err
 	}
 	return &pb.Void{}, nil
