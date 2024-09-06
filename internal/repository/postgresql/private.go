@@ -208,7 +208,7 @@ func (s *PrivateRepo) DeletePrivate(req *pb.DeletePrivat) (*pb.Void, error) {
 
 	queryDocs := `
 	UPDATE
-		private
+		documentation
 	SET
 		deleted_at = extract(epoch from now())
 	WHERE

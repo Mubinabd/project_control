@@ -318,7 +318,7 @@ func (s *GroupRepo) DeleteGroup(req *pb.DeleteGr) (*pb.Void, error) {
 
 	queryDocs := `
 	UPDATE
-		groups
+		documentation
 	SET
 		deleted_at = extract(epoch from now())
 	WHERE
@@ -332,7 +332,7 @@ func (s *GroupRepo) DeleteGroup(req *pb.DeleteGr) (*pb.Void, error) {
 
 	queryDevs := `
 	UPDATE
-		groups
+		developers
 	SET
 		deleted_at = extract(epoch from now())
 	WHERE
