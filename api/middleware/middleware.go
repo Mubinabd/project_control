@@ -12,10 +12,6 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-const (
-	key = "secret_key"
-)
-
 func Middleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		url := (ctx.Request.URL.Path)
