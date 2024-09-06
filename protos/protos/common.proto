@@ -1,0 +1,21 @@
+syntax="proto3";
+
+package proto;
+
+option go_package = "pkg/genproto";
+
+message Void{}
+
+message Pagination{
+    int32 limit = 1;
+    int32 offset = 2;
+}
+
+message ById{
+    string id = 1;
+}
+message Documentation{
+    string title = 1;
+    string description = 2;
+    string url = 3;
+}
