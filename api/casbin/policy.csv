@@ -1,8 +1,8 @@
-p,unauthorized, /v1/group/create,POST
-p,unauthorized, /v1/group/:id,GET
-p,unauthorized, /v1/group/update/:id,PUT
-p,unauthorized, /v1/group/delete/:id,DELETE
-p,unauthorized, /v1/group/list,GET
+p,developer, /v1/group/create,POST
+p,developer, /v1/group/:id,GET
+p,developer, /v1/group/update/:id,PUT
+p,developer, /v1/group/delete/:id,DELETE
+p,developer, /v1/group/list,GET
 
 p,developer, /v1/private/create,POST
 p,developer, /v1/private/:id,GET
